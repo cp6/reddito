@@ -10,11 +10,11 @@ class Domain extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'amount', 'created_at'];
+    protected $fillable = ['name', 'amount', 'amount_18_plus', 'subs_posted_to', 'created_at'];
 
     public static function idForDomain(string $domain): int
     {
-        return Cache::remember("domain.$domain", now()->addMonths(2), function () use ($domain) {
+        //return Cache::remember("domain.$domain", now()->addMonths(2), function () use ($domain) {
             $exists = self::where('name', $domain)->first();
 
             if (isset($exists->id)) {
@@ -24,7 +24,7 @@ class Domain extends Model
             $domain_obj = self::create(['name' => $domain, 'created_at' => date('Y-m-d H:i:s')]);
 
             return $domain_obj->id;
-        });
+        //});
     }
 
 }

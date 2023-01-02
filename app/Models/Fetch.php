@@ -37,7 +37,7 @@ class Fetch extends Model
         return $call_response;
     }
 
-    public function processData(string $data): \Illuminate\Http\JsonResponse
+    public function processData(string $data): array
     {
         $start_timer = microtime(true);
         $date_f = date('Y-m-d H:i:s');
@@ -45,8 +45,8 @@ class Fetch extends Model
 
         try {
             $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
-        } catch (\Exception $exception){
-            return response()->json(['success' => false, 'datetime' => $date_f, 'message' =>  'Error decoding the JSON'], 500)->header('Content-Type', 'application/json');
+        } catch (\Exception $exception) {
+            return ['success' => false, 'datetime' => $date_f, 'message' => 'Error decoding the JSON'];
         }
         $posts_array = array();
 
@@ -63,13 +63,13 @@ class Fetch extends Model
 
                 $sub_id = $val['data']['subreddit_id'];
 
+                $domain_id = Domain::idForDomain($val['data']['domain']);
+
                 try {
                     Sub::updateOrCreate(['id' => $sub_id, 'subscribers' => $val['data']['subreddit_subscribers']], ['name' => $val['data']['subreddit']]);
                 } catch (\Exception $exception) {
 
                 }
-
-                $domain_id = Domain::idForDomain($val['data']['domain']);
 
                 $awards_count = count($val['data']['all_awardings']);
 
@@ -116,7 +116,7 @@ class Fetch extends Model
                 }
 
                 $original_title = utf8_encode(trim(substr($val['data']['title'], 0, 255)));
-                $cleaned_the_title = preg_replace('/\s+/', ' ', preg_replace('/[^A-Za-z0-9\-()$_|!@"%?=+.,\':\[\]\/]/', ' ', $original_title));
+                $cleaned_the_title = preg_replace('/\s+/', ' ', preg_replace('/[^A-Za-z0-9\-()$_|!*@"%?=+.,\':\[\]\/]/', ' ', $original_title));
 
                 if ($original_title !== $cleaned_the_title) {
                     $title_was_cleaned = 1;
@@ -208,8 +208,7 @@ class Fetch extends Model
 
         self::create(['results' => $post_count, 'inserted' => $inserted, 'updated' => $updated]);
 
-        return response()->json(['success' => true, 'datetime' => $date_f, 'post_count' => $post_count, 'inserted' => $inserted, 'updated' => $updated, 'url' => $this->url, 'seconds' => (float)number_format(microtime(true) - $start_timer, 2), 'posts' => $posts_array], 200)
-            ->header('Content-Type', 'application/json');
+        return ['success' => true, 'datetime' => $date_f, 'post_count' => $post_count, 'inserted' => $inserted, 'updated' => $updated, 'url' => $this->url, 'seconds' => (float)number_format(microtime(true) - $start_timer, 2), 'posts' => $posts_array];
     }
 
 }
