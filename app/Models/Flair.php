@@ -15,4 +15,9 @@ class Flair extends Model
 
     protected $fillable = ['id', 'text', 'type', 'text_color', 'background_color', 'css_class', 'rich_text_1', 'rich_text_2', 'rich_text_3', 'rich_text_4'];
 
+    public function flairsForPost(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(FlairsForPost::class, 'flair_id', 'id');
+    }
+
 }

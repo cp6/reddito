@@ -14,4 +14,10 @@ class LinkFlair extends Model
     protected $keyType = 'string';
 
     protected $fillable = ['id', 'type', 'text', 'css_class', 'text_color', 'richtext_1', 'richtext_2', 'richtext_3'];
+
+    public function flairsForPost(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LinkFlairForPost::class, 'flair_id', 'id');
+    }
+
 }

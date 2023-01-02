@@ -11,4 +11,9 @@ class PostTracking extends Model
 
     protected $fillable = ['post_id', 'status', 'locked', 'has_awards', 'score', 'comments', 'awards', 'cross_posts', 'upvote_ratio', 'minutes_since_posted', 'created_at'];
 
+    public function post(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'id', 'id');
+    }
+
 }

@@ -27,4 +27,14 @@ class Domain extends Model
         //});
     }
 
+    public function post(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Post::class, 'domain_id', 'id');
+    }
+
+    public function url(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Url::class, 'domain_id', 'id');
+    }
+
 }

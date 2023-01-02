@@ -15,5 +15,10 @@ class Title extends Model
 
     protected $fillable = ['id', 'title', 'cleaned_title', 'was_cleaned'];
 
+    public function post(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'id', 'id');
+    }
+
 
 }

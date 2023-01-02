@@ -14,4 +14,10 @@ class SelfText extends Model
     protected $keyType = 'string';
 
     protected $fillable = ['id', 'text', 'html'];
+
+    public function post(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'id', 'id');
+    }
+
 }
