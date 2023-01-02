@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fetch;
+use App\Models\Post;
 
 class FetchController extends Controller
 {
