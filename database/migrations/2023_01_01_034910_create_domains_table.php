@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('domains', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->integer('amount')->default(null)->nullable();
-            $table->integer('amount_18_plus')->default(null)->nullable();
-            $table->integer('subs_posted_to')->default(null)->nullable();
+            $table->integer('amount')->default(0);
+            $table->integer('amount_18_plus')->default(0);
+            $table->integer('subs_posted_to')->default(0);
             $table->timestamps();
         });
     }

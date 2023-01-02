@@ -10,11 +10,9 @@ return new class extends Migration
     {
         Schema::create('post_process_queues', function (Blueprint $table) {
             $table->char('id', 8)->primary();
-            $table->boolean('increment_author_posts_count')->default(0);
-            $table->boolean('increment_author_subs_count')->default(0);
-            $table->boolean('increment_sub_posts_count')->default(0);
-            $table->boolean('increment_domain_posts_count')->default(0);
-            $table->boolean('increment_domain_unique_subs_count')->default(0);
+            $table->boolean('do_author_counts')->default(0);
+            $table->boolean('do_sub_count')->default(0);
+            $table->boolean('do_domain_count')->default(0);
             $table->timestamps();
             $table->foreign('id')->references('id')->on('posts')->onDelete('cascade');
         });

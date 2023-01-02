@@ -11,11 +11,11 @@ return new class extends Migration
         Schema::create('subs', function (Blueprint $table) {
             $table->string('id', 16)->primary();
             $table->string('name')->unique();
-            $table->integer('posts')->default(null)->nullable();
-            $table->integer('posts_18_plus')->default(null)->nullable();
-            $table->integer('total_score')->default(null)->nullable();
-            $table->integer('comments_on_posts')->default(null)->nullable();
-            $table->integer('subscribers')->default(null)->nullable();
+            $table->integer('posts')->default(0);
+            $table->integer('posts_18_plus')->default(0);
+            $table->integer('total_score')->default(0);
+            $table->integer('comments_on_posts')->default(0);
+            $table->integer('subscribers')->default(0);
             $table->timestamps();
         });
     }
