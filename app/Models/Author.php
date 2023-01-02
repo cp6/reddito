@@ -15,4 +15,9 @@ class Author extends Model
 
     protected $fillable = ['id', 'username', 'posts', 'score', 'comments', 'subs', 'posts_18_plus', 'total_score', 'comments_on_posts', 'subs_posted_to'];
 
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class, 'author_id', 'id');
+    }
+
 }

@@ -13,6 +13,11 @@ class PostProcessQueue extends Model
 
     protected $keyType = 'string';
 
-    protected $fillable = ['id', 'increment_author_posts_count', 'increment_author_subs_count', 'increment_sub_posts_count', 'increment_domain_posts_count', 'increment_domain_unique_subs_count'];
+    protected $fillable = ['id', 'do_author_counts', 'do_sub_count', 'do_domain_count'];
+
+    public function post(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'id', 'id');
+    }
 
 }

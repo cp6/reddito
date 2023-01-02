@@ -15,5 +15,14 @@ class Url extends Model
 
     protected $fillable = ['id', 'domain_id', 'main', 'dest', 'thumbnail', 'other', 'size', 'height', 'width', 'duration', 'bitrate', 'downloaded', 'is_unique'];
 
+    public function post(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'id', 'id');
+    }
+
+    public function domain(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Domain::class, 'id', 'domain_id');
+    }
 
 }
