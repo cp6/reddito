@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Url extends Model
+{
+    use HasFactory;
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    protected $fillable = ['id', 'domain_id', 'main', 'dest', 'thumbnail', 'other', 'size', 'height', 'width', 'duration', 'bitrate', 'downloaded', 'is_unique'];
+
+
+}
