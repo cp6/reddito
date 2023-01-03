@@ -26,7 +26,7 @@ class PostController extends Controller
 
     public function updateFromSubs(int $amount = 30): \Illuminate\Http\JsonResponse
     {
-        $subs = Post::where('updated_at', '>=', Carbon::now()->subHours(1)->toDateTimeString())
+        $subs = Post::where('status', 1)->where('updated_at', '>=', Carbon::now()->subHours(1)->toDateTimeString())
             ->take($amount)->get()->unique('sub_id');
 
         foreach ($subs as $s){

@@ -260,7 +260,7 @@ class Post extends Model
                         'upvote_ratio' => $val['data']['upvote_ratio'],
                         'created_at' => $posted_at,
                         'updated_at' => null
-                    ]);
+                    ])->take(1);
                 }
 
                 if ($awards_count > 0) {
