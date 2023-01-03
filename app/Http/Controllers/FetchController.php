@@ -8,7 +8,7 @@ use App\Models\Post;
 class FetchController extends Controller
 {
 
-    public function get(): \Illuminate\Http\JsonResponse
+    public function get(int $loops = 5): \Illuminate\Http\JsonResponse
     {
         //Track a certain subreddit (pics)
         //$fetch = new Fetch("https://www.reddit.com/r/pics/new.json?sort=new&limit=50");
@@ -21,7 +21,7 @@ class FetchController extends Controller
         //If doing subreddit ONLY you can just call a couple of times throughout the minute
 
         $result_array = [];
-        for ($i = 1; $i <= 8; $i++) {//9 calls with a 4 second break after each one
+        for ($i = 1; $i <= $loops; $i++) {//9 calls with a 4 second break after each one
             $result_array[] = $fetch->processData($fetch->getData());
             sleep(4);
         }//If this takes more than 1 minute on your system do less than 9 loops
