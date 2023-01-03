@@ -247,7 +247,7 @@ class Post extends Model
                     }
 
                 } else {//Deleted
-                    $post_insert_update = self::where('id', $post_id)->update([
+                    $post_insert_update = self::where('id', $post_id)->take(1)->update([
                         'status' => 0,
                         'is_self' => (int)$val['data']['is_self'],
                         'over_18' => (int)$val['data']['over_18'],
@@ -260,7 +260,7 @@ class Post extends Model
                         'upvote_ratio' => $val['data']['upvote_ratio'],
                         'created_at' => $posted_at,
                         'updated_at' => null
-                    ])->take(1);
+                    ]);
                 }
 
                 if ($awards_count > 0) {
