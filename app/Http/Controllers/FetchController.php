@@ -18,7 +18,7 @@ class FetchController extends Controller
 
         $result_array = [];
         for ($i = 1; $i <= $loops; $i++) {//5 calls with a 4 second break after each one
-            $result_array[] = $fetch->processData($fetch->getData());
+            $result_array[] = $fetch->processPostsData($fetch->getData());
             sleep(4);
         }//If this takes more than 1 minute on your system do less than 5 loops
 
@@ -32,7 +32,7 @@ class FetchController extends Controller
 
         $result_array = [];
         for ($i = 1; $i <= $loops; $i++) {//5 calls with a 4 second break after each one
-            $result_array[] = $fetch->processData($fetch->getData());
+            $result_array[] = $fetch->processPostsData($fetch->getData());
             sleep(4);
         }//If this takes more than 1 minute on your system do less than 5 loops
 

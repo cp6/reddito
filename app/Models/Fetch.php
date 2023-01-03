@@ -37,7 +37,7 @@ class Fetch extends Model
         return $call_response;
     }
 
-    public function processData(string $data): array
+    public function processPostsData(string $data): array
     {
         $start_timer = microtime(true);
         $date_f = date('Y-m-d H:i:s');
