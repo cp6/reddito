@@ -18,7 +18,8 @@ Route::get('/', function () {
 });
 
 //Fetch new posts
-Route::get('/call/get-posts/{loops?}', [App\Http\Controllers\FetchController::class, 'get'])->name('call.get');
+Route::get('/call/get/new/{sub?}/{amount?}/{loops?}', [App\Http\Controllers\FetchController::class, 'getNew'])->name('call.get.new');
+Route::get('/call/get/hot/{sub?}/{amount?}/{loops?}', [App\Http\Controllers\FetchController::class, 'getHot'])->name('call.get.hot');
 
 //Update a post
 Route::get('/call/update/post/{post}', [App\Http\Controllers\PostController::class, 'update'])->name('call.update.post');
