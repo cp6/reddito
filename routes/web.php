@@ -24,6 +24,8 @@ Route::get('/call/get/hot/{sub?}/{amount?}/{loops?}', [App\Http\Controllers\Fetc
 //Update a post
 Route::get('/call/update/post/{post}', [App\Http\Controllers\PostController::class, 'update'])->name('call.update.post');
 
+Route::get('/call/update/from/subs/{amount?}', [App\Http\Controllers\PostController::class, 'updateFromSubs'])->name('call.update.from.subs');
+
 //Post process queue for post counts
 Route::get('/call/post-queue/author/{amount?}', [App\Http\Controllers\PostProcessQueueController::class, 'doAuthorCounts'])->name('call.post-queue.author');
 Route::get('/call/post-queue/sub/{amount?}', [App\Http\Controllers\PostProcessQueueController::class, 'doSubCounts'])->name('call.post-queue.sub');
