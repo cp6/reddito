@@ -67,7 +67,7 @@ class Post extends Model
             $cross_posts = $val['num_crossposts'];
             $over_18 = (int)$val['over_18'];
 
-            ($val['data']['author'] !== '[deleted]') ? $status = 1 : $status = 0;
+            ($val['author'] !== '[deleted]') ? $status = 1 : $status = 0;
 
             $post->update([
                 'status' => $status,
