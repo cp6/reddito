@@ -95,6 +95,8 @@ class Post extends Model
 
         }
 
+        return [];
+
     }
 
     public static function updatePostsFromSub(Sub $sub, int $amount = 99)
