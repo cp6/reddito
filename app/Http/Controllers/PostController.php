@@ -23,12 +23,13 @@ class PostController extends Controller
 
     public function updateMany(int $amount = 30): \Illuminate\Http\JsonResponse
     {
-        $posts = Post::where('updated_at', '>=', Carbon::now()->subHours(2)->toDateTimeString())
+        $posts = Post::where('updated_at', '<=', Carbon::now()->subHours(2)->toDateTimeString())
             ->where('created_at', '>=', Carbon::now()->subDay(1)->toDateTimeString())->take($amount)->get();
+
         //Posts that have NOT been updated in 2 hours and are NOT older than 1 day
         $posts_array = [];
         foreach ($posts as $post){
-            dump($post);
+            //dump($post);
             $posts_array[] = Post::processPost($post);
         }
 
