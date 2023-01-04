@@ -93,9 +93,11 @@ class Post extends Model
                 LinkFlairForPost::do($post->id, $val);
             }
 
+            return ['post_id' => $post->id, 'status' => $status, 'score' => $upvotes, 'comments' => $comments];
+
         }
 
-        return [];
+        return ['post_id' => null, 'status' => null, 'score' => null, 'comments' => null];
 
     }
 

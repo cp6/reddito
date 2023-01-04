@@ -24,15 +24,15 @@ class PostController extends Controller
     public function updateMany(int $amount = 30): \Illuminate\Http\JsonResponse
     {
         $posts = Post::where('updated_at', '>=', Carbon::now()->subHours(2)->toDateTimeString())
-            ->where('created_at', '<=', Carbon::now()->subDay(1)->toDateTimeString())->take($amount)->get();
+            ->where('created_at', '>=', Carbon::now()->subDay(1)->toDateTimeString())->take($amount)->get();
         //Posts that have NOT been updated in 2 hours and are NOT older than 1 day
-
+        $posts_array = [];
         foreach ($posts as $post){
             dump($post);
-            Post::processPost($post);
+            $posts_array[] = Post::processPost($post);
         }
 
-        return response()->json(['call' => 'updateMany', 'amount' => $amount], 200)->header('Content-Type', 'application/json');
+        return response()->json(['call' => 'updateMany', 'amount' => $amount, 'posts' => $posts_array], 200)->header('Content-Type', 'application/json');
     }
 
     public function updateFromSubs(int $subs_amount = 30, int $api_amount = 99): \Illuminate\Http\JsonResponse
