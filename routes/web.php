@@ -23,6 +23,7 @@ Route::get('/call/get/hot/{sub?}/{amount?}/{loops?}', [App\Http\Controllers\Fetc
 
 //Update a post
 Route::get('/call/update/post/{post}', [App\Http\Controllers\PostController::class, 'update'])->name('call.update.post');
+Route::get('/call/update/posts/{amount?}', [App\Http\Controllers\PostController::class, 'updateMany'])->name('call.update.posts.many');
 
 Route::get('/call/update/from/subs/{amount?}', [App\Http\Controllers\PostController::class, 'updateFromSubs'])->name('call.update.from.subs');
 

@@ -21,4 +21,11 @@ class AwardsForPost extends Model
         return $this->hasOne(Post::class, 'id', 'post_id');
     }
 
+    public function do(string $post_id, array $award): AwardsForPost
+    {
+        return self::updateOrCreate(['post_id' => $post_id, 'award_id' => $award['id']], [
+            'count' => $award['count']
+        ]);
+    }
+
 }

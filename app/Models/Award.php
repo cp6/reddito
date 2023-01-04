@@ -21,4 +21,15 @@ class Award extends Model
         return $this->hasMany(AwardsForPost::class, 'award_id', 'id');
     }
 
+    public static function do(array $award): Award
+    {
+        return self::updateOrCreate(['id' => $award['id']], [
+            'title' => $award['name'],
+            'desc' => $award['description'],
+            'price' => $award['coin_price'],
+            'icon' => $award['icon_url'],
+            'icon_small' => $award['resized_icons'][3]['url'] ?? null
+        ]);
+    }
+
 }

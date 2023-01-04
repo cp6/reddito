@@ -45,7 +45,7 @@ class Post extends Model
         return $this->hasOne(Url::class, 'id', 'id');
     }
 
-    public static function updatePost(Post $post)
+    public static function processPost(Post $post): array
     {
         $date_f = date('Y-m-d H:i:s');
 
@@ -67,7 +67,10 @@ class Post extends Model
             $cross_posts = $val['num_crossposts'];
             $over_18 = (int)$val['over_18'];
 
+            ($val['data']['author'] !== '[deleted]') ? $status = 1 : $status = 0;
+
             $post->update([
+                'status' => $status,
                 'score' => $upvotes,
                 'comments' => $comments,
                 'upvote_ratio' => $upvote_ratio,
@@ -78,35 +81,17 @@ class Post extends Model
             ]);
 
 
-            if ($awards > 0) {
+            if (isset($val['all_awardings'][0])) {
                 foreach ($val['all_awardings'] as $award) {
-                    Award::updateOrCreate(['id' => $award['id']], [
-                        'title' => $award['name'],
-                        'desc' => $award['description'],
-                        'price' => $award['coin_price'],
-                        'icon' => $award['icon_url'],
-                        'icon_small' => $award['resized_icons'][3]['url'] ?? null
-                    ]);
-
-                    AwardsForPost::updateOrCreate(['post_id' => $post->id, 'award_id' => $award['id']], [
-                        'count' => $award['count']
-                    ]);
-
+                    Award::do($award);
+                    AwardsForPost::do($post->id, $award);
                 }
             }
 
             if (isset($val['link_flair_template_id'])) {//Has a link/post flair
-
-                LinkFlair::updateOrCreate(['id' => $val['link_flair_template_id']], [
-                    'type' => $val['link_flair_type'], 'text' => $val['link_flair_text'],
-                    'text_color' => (!empty($val['link_flair_text_color'])) ? $val['link_flair_text_color'] : null,
-                    'css_class' => (!empty($val['link_flair_css_class'])) ? $val['link_flair_css_class'] : null,
-                    'richtext_1' => $val['link_flair_richtext']['e'] ?? null, 'richtext_2' => $val['link_flair_richtext']['t'] ?? null
-                ]);
-
-                LinkFlairForPost::updateOrCreate(['flair_id' => $val['link_flair_template_id'], 'post_id' => $post->id], []);
+                LinkFlair::do($val);
+                LinkFlairForPost::do($post->id, $val);
             }
-
 
         }
 
@@ -151,7 +136,7 @@ class Post extends Model
                         'is_self' => (int)$val['data']['is_self'],
                         'over_18' => (int)$val['data']['over_18'],
                         'locked' => (int)$val['data']['locked'],
-                        'has_awards' => (isset($val['data']['all_awardings'][0])),
+                        'has_awards' => ($awards_count > 0) ? 1 : 0,
                         'score' => $upvotes,
                         'comments' => $comments,
                         'awards' => $awards_count,
@@ -252,7 +237,7 @@ class Post extends Model
                         'is_self' => (int)$val['data']['is_self'],
                         'over_18' => (int)$val['data']['over_18'],
                         'locked' => (int)$val['data']['locked'],
-                        'has_awards' => (isset($val['data']['all_awardings'][0])),
+                        'has_awards' => ($awards_count > 0) ? 1 : 0,
                         'score' => $upvotes,
                         'comments' => $comments,
                         'awards' => $awards_count,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fetch;
 use App\Models\Post;
+use App\Models\Sub;
 
 class FetchController extends Controller
 {
@@ -18,7 +19,7 @@ class FetchController extends Controller
 
         $result_array = [];
         for ($i = 1; $i <= $loops; $i++) {//5 calls with a 4 second break after each one
-            $result_array[] = $fetch->processPostsData($fetch->getData());
+            $result_array[] = Sub::processSubPosts($fetch->getData());
             sleep(4);
         }//If this takes more than 1 minute on your system do less than 5 loops
 
@@ -32,7 +33,7 @@ class FetchController extends Controller
 
         $result_array = [];
         for ($i = 1; $i <= $loops; $i++) {//5 calls with a 4 second break after each one
-            $result_array[] = $fetch->processPostsData($fetch->getData());
+            $result_array[] = Sub::processSubPosts($fetch->getData());
             sleep(4);
         }//If this takes more than 1 minute on your system do less than 5 loops
 

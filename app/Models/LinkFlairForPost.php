@@ -21,4 +21,9 @@ class LinkFlairForPost extends Model
         return $this->belongsTo(Post::class, 'id', 'post_id');
     }
 
+    public static function do(string $post_id, array $val): LinkFlairForPost
+    {
+        return self::updateOrCreate(['flair_id' => $val['link_flair_template_id'], 'post_id' => $post_id], []);
+    }
+
 }
